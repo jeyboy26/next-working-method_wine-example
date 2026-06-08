@@ -40,12 +40,12 @@
   .brand .mark{width:8px; height:8px; border-radius:50%; background:var(--gold); box-shadow:0 0 10px rgba(201,162,75,.6)}
   .brand em{font-style:italic; color:var(--gold-bright)}
   .navlinks{display:flex; gap:clamp(9px,2.2vw,26px); font-family:var(--label); text-transform:uppercase; letter-spacing:.16em; font-size:11px}
-  .navlinks a{color:var(--muted); text-decoration:none; transition:color .3s; padding:4px 0; position:relative}
+  .navlinks a{color:var(--muted); text-decoration:none; transition:color .3s; padding:4px 0; position:relative; cursor:pointer}
   .navlinks a::after{content:""; position:absolute; left:0; right:100%; bottom:-2px; height:1px; background:var(--gold); transition:right .3s}
   .navlinks a:hover,.navlinks a.active{color:var(--ink)}
   .navlinks a:hover::after,.navlinks a.active::after{right:0}
-  @media(max-width:680px){.navlinks a:nth-child(3),.navlinks a:nth-child(4){display:none}}
-  @media(max-width:430px){.navlinks a:nth-child(2){display:none}}
+  @media(max-width:820px){.navlinks a:nth-child(3),.navlinks a:nth-child(4),.navlinks a:nth-child(5){display:none}}
+  @media(max-width:460px){.navlinks a:nth-child(6){display:none}}
 
   .hero{min-height:88vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:calc(var(--nav) + 30px) 0 40px}
   .kicker{font-family:var(--label); text-transform:uppercase; letter-spacing:.42em; font-size:11px; color:var(--gold); font-weight:400; padding-left:.42em}
@@ -185,6 +185,29 @@
   .somm{margin-top:30px; text-align:center; font-family:var(--serif); font-size:clamp(17px,2.4vw,22px); color:var(--ink); font-style:italic}
   .somm span{color:var(--gold-bright); white-space:nowrap}
 
+  /* analytics */
+  .agrid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  @media(max-width:760px){.agrid{grid-template-columns:1fr}}
+  .apanel{background:linear-gradient(180deg,var(--bg2),var(--bg)); border:1px solid var(--line); border-radius:14px; padding:clamp(18px,2.4vw,28px)}
+  .ahead{display:flex; align-items:baseline; gap:12px; margin-bottom:6px}
+  .anum{font-family:var(--serif); font-style:italic; font-size:22px; color:var(--gold)}
+  .apanel h3{font-family:var(--serif); font-weight:500; font-size:22px; line-height:1.12}
+  .ains{font-size:13.5px; color:var(--muted); font-style:italic; line-height:1.5; margin-bottom:14px}
+  .aform{font-family:var(--label); font-size:11px; letter-spacing:.03em; color:var(--faint); margin-top:12px; border-top:1px solid var(--line); padding-top:10px; line-height:1.5}
+  .apanel svg{width:100%; height:auto; display:block}
+  #boxplots{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  @media(max-width:560px){#boxplots{grid-template-columns:1fr}}
+  .boxblock h4{font-family:var(--label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--gold); margin-bottom:4px; font-weight:500}
+  .axtick{font-family:var(--label); font-size:9px; fill:var(--faint)}
+  .axlabel{font-family:var(--label); text-transform:uppercase; letter-spacing:.12em; font-size:9.5px; fill:var(--muted)}
+  .boxlab,.pcaxis,.radlab{font-family:var(--label); text-transform:uppercase; font-size:9px; fill:var(--muted)}
+  .boxlab{letter-spacing:.06em}.pcaxis{letter-spacing:.1em}.radlab{letter-spacing:.04em}
+  .plegend{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px}
+  .lchip{display:inline-flex; align-items:center; gap:6px; font-family:var(--label); text-transform:uppercase; letter-spacing:.1em; font-size:10px; color:var(--muted); background:none; border:1px solid var(--line); border-radius:99px; padding:6px 11px; cursor:pointer; transition:all .25s}
+  .lchip:hover{color:var(--ink); border-color:var(--line2)}
+  .lchip[aria-pressed="true"]{color:var(--ink); border-color:var(--gold)}
+  .lchip>span{width:10px; height:10px; border-radius:50%; display:inline-block}
+  .lchip.static{cursor:default}
   footer{border-top:1px solid var(--line); padding:50px 0 60px; text-align:center}
   footer .fbrand{font-family:var(--serif); font-size:22px; font-weight:500}
   footer .fbrand em{font-style:italic; color:var(--gold-bright)}
@@ -200,11 +223,12 @@
 <nav id="nav">
   <div class="brand"><span class="mark"></span>Notes de <em>Cave</em></div>
   <div class="navlinks">
-    <a href="#nations" data-sec="nations">Les Nations</a>
-    <a href="#glass" data-sec="glass">Le Verre</a>
-    <a href="#spectrum" data-sec="spectrum">L'Éventail</a>
-    <a href="#table" data-sec="table">La Table</a>
-    <a href="#lexicon" data-sec="lexicon">Le Lexique</a>
+    <a data-target="nations" data-sec="nations" tabindex="0">Les Nations</a>
+    <a data-target="glass" data-sec="glass" tabindex="0">Le Verre</a>
+    <a data-target="spectrum" data-sec="spectrum" tabindex="0">L'Éventail</a>
+    <a data-target="table" data-sec="table" tabindex="0">La Table</a>
+    <a data-target="analytics" data-sec="analytics" tabindex="0">Analyse</a>
+    <a data-target="lexicon" data-sec="lexicon" tabindex="0">Le Lexique</a>
   </div>
 </nav>
 
@@ -212,7 +236,7 @@
   <div class="kicker reveal">Un guide pratique du verre</div>
   <h1 class="reveal">Le Monde<br>du <em>Vin Rouge</em></h1>
   <p class="lede reveal">Chaque vin répond aux mêmes quatre questions — <b>voir, sentir, goûter, juger</b>. Explorez quatre grandes nations — l'Italie, la France, l'Espagne et les États-Unis — et voyez, critère par critère, ce qui les distingue.</p>
-  <a href="#nations" class="scrollcue reveal">Commencer<span class="ln"></span></a>
+  <a data-target="nations" class="scrollcue reveal">Commencer<span class="ln"></span></a>
 </header>
 
 <!-- ===== LES NATIONS (landing comparison) ===== -->
@@ -302,6 +326,46 @@
     <h2 class="sectitle reveal">La <em>Table</em></h2>
     <p class="secintro reveal">Accordez le poids au poids, l'acidité au gras. Voici les classiques pour les rouges d'<span id="tableCountry">Italie</span>.</p>
     <div class="pairing reveal" id="pairing"></div>
+  </div>
+</section>
+
+<!-- ===== LE SURVOL ANALYTIQUE ===== -->
+<section class="sec" id="analytics">
+  <div class="wrap">
+    <div class="seclabel reveal">Pour les amateurs de chiffres</div>
+    <h2 class="sectitle reveal">Le Survol <em>Analytique</em></h2>
+    <p class="secintro reveal">Au-delà du profil de chaque vin : la <b>dispersion</b>, les <b>corrélations</b> et un <b>chiffre défendable</b>. Cinq lectures, 25 cépages. <span>Données structurelles tirées des profils ; prix et notes indicatifs.</span></p>
+    <div class="agrid">
+      <div class="apanel reveal" style="grid-column:1/-1">
+        <div class="ahead"><span class="anum">01</span><h3>Distribution par pays — la moyenne ment</h3></div>
+        <p class="ains" id="ins-box"></p>
+        <div id="boxplots"></div>
+      </div>
+      <div class="apanel reveal" style="grid-column:1/-1">
+        <div class="ahead"><span class="anum">02</span><h3>Coordonnées parallèles — 25 cépages d'un trait</h3></div>
+        <p class="ains">Chaque ligne est un cépage, du corps au boisé. Survolez une nation pour l'isoler, cliquez pour la fixer.</p>
+        <div class="plegend" id="pc-legend"></div>
+        <div id="parallel"></div>
+      </div>
+      <div class="apanel reveal">
+        <div class="ahead"><span class="anum">03</span><h3>Prix ↔ Qualité &amp; frontière d'efficience</h3></div>
+        <p class="ains">Sous la courbe dorée : le rapport qualité-prix. Au-dessus : la prime au prestige.</p>
+        <div class="plegend" id="sc-legend"></div>
+        <div id="scatter"></div>
+      </div>
+      <div class="apanel reveal">
+        <div class="ahead"><span class="anum">04</span><h3>L'empreinte aromatique nationale</h3></div>
+        <p class="ains">Le profil aromatique moyen des quatre nations, superposé en un seul flocon.</p>
+        <div class="plegend" id="rad-legend"></div>
+        <div id="natradar"></div>
+      </div>
+      <div class="apanel reveal" style="grid-column:1/-1">
+        <div class="ahead"><span class="anum">05</span><h3>Indice Ancien ↔ Nouveau Monde</h3></div>
+        <p class="ains" id="ins-index"></p>
+        <div id="indexchart"></div>
+        <p class="aform" id="formula"></p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -482,22 +546,129 @@ function select(id){
 }
 function row(k,val){return `<div class="vrow"><span class="vk">${k}</span><span class="vv">${val}</span></div>`;}
 
+/* ===================== LE SURVOL ANALYTIQUE ===================== */
+const COL={gold:"#c9a24b",goldB:"#e6c374",ink:"#ede3d4",muted:"#a8987f",faint:"#6c5e50",bg:"#16100f"};
+// prix (€) et note (/100) indicatifs par cépage
+const MARKET={
+  nebbiolo:[55,94],sangiovese:[35,92],barbera:[18,89],monte:[14,87],nero:[16,88],primitivo:[17,88],aglianico:[30,92],
+  pinot:[45,93],gamay:[16,88],merlot:[30,90],grenache:[35,91],syrah:[40,93],cabfr:[55,94],
+  temp:[22,91],mencia:[18,90],bobal:[12,87],tinto:[40,93],garnacha:[45,94],monastrell:[16,89],
+  cabnapa:[70,94],pinotor:[40,92],merlotwa:[25,90],zin:[22,89],syrahus:[30,91],petite:[28,90]
+};
+function allWines(){return ORDER.flatMap(c=>COUNTRIES[c].wines.map(w=>({...w,country:c,accent:COUNTRIES[c].accent})));}
+function quart(arr){const a=[...arr].sort((x,y)=>x-y),n=a.length;const q=p=>{const i=(n-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return a[lo]+(a[hi]-a[lo])*(i-lo);};return{min:a[0],q1:q(.25),med:q(.5),q3:q(.75),max:a[n-1]};}
+function staticLegend(){return ORDER.map(c=>`<span class="lchip static"><span style="background:${COUNTRIES[c].accent}"></span>${COUNTRIES[c].name}</span>`).join("");}
+
+function buildBoxplots(){
+  const crit=[["body","Corps"],["tannin","Tanins"],["acid","Acidité"],["alc","Alcool"]];
+  const W=360,L=86,Rr=346,rows=[34,66,98,130];
+  const sx=v=>L+(v-0.5)/5*(Rr-L);
+  let html="";
+  crit.forEach(([k,label])=>{
+    let s=`<svg viewBox="0 0 ${W} 162" role="img" aria-label="Boîtes à moustaches ${label} par pays">`;
+    for(let t=1;t<=5;t++){const x=sx(t);s+=`<line x1="${x}" y1="18" x2="${x}" y2="146" stroke="rgba(201,162,75,.10)"/><text x="${x}" y="158" text-anchor="middle" class="axtick">${t}</text>`;}
+    ORDER.forEach((c,i)=>{const C=COUNTRIES[c];const Q=quart(C.wines.map(w=>w.pal[k]));const y=rows[i];const a=C.accent;
+      s+=`<text x="6" y="${y+3}" class="boxlab">${C.name}</text>`;
+      s+=`<line x1="${sx(Q.min)}" y1="${y}" x2="${sx(Q.max)}" y2="${y}" stroke="${a}" stroke-width="1.2" opacity=".55"/>`;
+      s+=`<line x1="${sx(Q.min)}" y1="${y-5}" x2="${sx(Q.min)}" y2="${y+5}" stroke="${a}" stroke-width="1.2" opacity=".55"/>`;
+      s+=`<line x1="${sx(Q.max)}" y1="${y-5}" x2="${sx(Q.max)}" y2="${y+5}" stroke="${a}" stroke-width="1.2" opacity=".55"/>`;
+      s+=`<rect x="${sx(Q.q1)}" y="${y-9}" width="${Math.max(2,sx(Q.q3)-sx(Q.q1))}" height="18" rx="3" fill="${a}" fill-opacity=".28" stroke="${a}" stroke-width="1.3"/>`;
+      s+=`<line x1="${sx(Q.med)}" y1="${y-9}" x2="${sx(Q.med)}" y2="${y+9}" stroke="${COL.ink}" stroke-width="2"/>`;
+    });
+    html+=`<div class="boxblock"><h4>${label}</h4>${s}</svg></div>`;
+  });
+  document.getElementById("boxplots").innerHTML=html;
+  document.getElementById("ins-box").textContent="Barre claire = médiane, boîte = 50 % central, moustaches = min–max. L'acidité italienne est haute et resserrée ; l'alcool grimpe et s'étale vers les États-Unis. Les fourchettes se chevauchent : le style national est une tendance, pas une règle.";
+}
+
+function buildParallel(){
+  const axes=[["body","Corps","pal"],["tannin","Tanins","pal"],["acid","Acidité","pal"],["alc","Alcool","pal"],["bf","Fruits noirs","aro"],["ok","Boisé","aro"]];
+  const W=700,T=30,B=318,L=44,Rr=656;
+  const ax=i=>L+i/(axes.length-1)*(Rr-L), ay=v=>B-(v-1)/4*(B-T);
+  let s=`<svg viewBox="0 0 ${W} 348" id="pcsvg" role="img" aria-label="Coordonnées parallèles des cépages">`;
+  axes.forEach((a,i)=>{const x=ax(i);s+=`<line x1="${x}" y1="${T}" x2="${x}" y2="${B}" stroke="rgba(201,162,75,.2)"/>`;
+    for(let v=1;v<=5;v++)s+=`<line x1="${x-3}" y1="${ay(v)}" x2="${x+3}" y2="${ay(v)}" stroke="rgba(201,162,75,.25)"/>`;
+    s+=`<text x="${x}" y="${B+22}" text-anchor="middle" class="pcaxis">${a[1]}</text>`;});
+  allWines().forEach(w=>{const pts=axes.map((a,i)=>`${ax(i)},${ay(w[a[2]][a[0]])}`).join(" ");
+    s+=`<polyline points="${pts}" fill="none" stroke="${w.accent}" stroke-width="1.4" opacity=".5" data-c="${w.country}" class="pcline"/>`;});
+  s+=`</svg>`;
+  document.getElementById("parallel").innerHTML=s;
+  document.getElementById("pc-legend").innerHTML=`<button class="lchip" data-c="all" aria-pressed="true"><span style="background:${COL.muted}"></span>Tous</button>`+ORDER.map(c=>`<button class="lchip" data-c="${c}"><span style="background:${COUNTRIES[c].accent}"></span>${COUNTRIES[c].name}</button>`).join("");
+  const hl=c=>document.querySelectorAll(".pcline").forEach(l=>{const on=(c==="all"||l.dataset.c===c);l.style.opacity=on?".75":".05";l.style.strokeWidth=on?"1.9":"1";});
+  const chips=[...document.querySelectorAll("#pc-legend .lchip")];
+  chips.forEach(b=>{b.addEventListener("mouseenter",()=>hl(b.dataset.c));
+    b.addEventListener("click",()=>{chips.forEach(x=>x.setAttribute("aria-pressed",x===b));hl(b.dataset.c);});});
+  document.getElementById("pc-legend").addEventListener("mouseleave",()=>{const sel=chips.find(x=>x.getAttribute("aria-pressed")==="true");hl(sel?sel.dataset.c:"all");});
+}
+
+function buildScatter(){
+  const pts=allWines().map(w=>({...w,price:MARKET[w.id][0],score:MARKET[w.id][1]}));
+  const W=440,L=50,Rr=420,T=22,B=308;
+  const sx=p=>L+p/80*(Rr-L), sy=v=>B-(v-85)/11*(B-T);
+  let s=`<svg viewBox="0 0 ${W} 344" role="img" aria-label="Nuage prix-qualité avec frontière d'efficience">`;
+  for(let p=0;p<=80;p+=20)s+=`<line x1="${sx(p)}" y1="${T}" x2="${sx(p)}" y2="${B}" stroke="rgba(201,162,75,.08)"/><text x="${sx(p)}" y="${B+18}" text-anchor="middle" class="axtick">${p}€</text>`;
+  for(let q=86;q<=96;q+=2)s+=`<line x1="${L}" y1="${sy(q)}" x2="${Rr}" y2="${sy(q)}" stroke="rgba(201,162,75,.08)"/><text x="${L-7}" y="${sy(q)+3}" text-anchor="end" class="axtick">${q}</text>`;
+  const sorted=[...pts].sort((a,b)=>a.price-b.price||b.score-a.score);
+  let best=-1,front=[];sorted.forEach(p=>{if(p.score>best){front.push(p);best=p.score;}});
+  s+=`<polyline points="${front.map(p=>`${sx(p.price)},${sy(p.score)}`).join(" ")}" fill="none" stroke="${COL.gold}" stroke-width="1.6" stroke-dasharray="5 4" opacity=".85"/>`;
+  pts.forEach(p=>s+=`<circle cx="${sx(p.price)}" cy="${sy(p.score)}" r="5" fill="${p.accent}" fill-opacity=".85" stroke="${COL.bg}" stroke-width="1"/>`);
+  s+=`<text x="${(L+Rr)/2}" y="342" text-anchor="middle" class="axlabel">Prix indicatif (€)</text>`;
+  s+=`<text transform="rotate(-90 14 ${(T+B)/2})" x="14" y="${(T+B)/2}" text-anchor="middle" class="axlabel">Note / 100</text>`;
+  s+=`</svg>`;
+  document.getElementById("scatter").innerHTML=s;
+  document.getElementById("sc-legend").innerHTML=staticLegend();
+}
+
+function buildNatRadar(){
+  const axes=[["rf","Fruits rouges"],["bf","Fruits noirs"],["sp","Épices"],["ok","Boisé"],["sv","Cuir & terre"],["fl","Floral"]];
+  const cx=170,cy=150,R=104;
+  const pt=(i,v)=>{const a=-Math.PI/2+i*(Math.PI*2/axes.length);const r=v/5*R;return[cx+r*Math.cos(a),cy+r*Math.sin(a)];};
+  let s=`<svg viewBox="0 0 340 300" role="img" aria-label="Radar des profils aromatiques moyens par pays">`;
+  for(let ring=1;ring<=5;ring++)s+=`<polygon points="${axes.map((a,i)=>pt(i,ring).join(",")).join(" ")}" fill="none" stroke="rgba(201,162,75,.1)"/>`;
+  axes.forEach((a,i)=>{const[x,y]=pt(i,5);s+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(201,162,75,.1)"/>`;const[lx,ly]=pt(i,5.55);const anc=Math.abs(lx-cx)<6?"middle":(lx>cx?"start":"end");s+=`<text x="${lx}" y="${ly+3}" text-anchor="${anc}" class="radlab">${a[1]}</text>`;});
+  const dash=["","6 4","2 3","9 3 2 3"];
+  ORDER.forEach((c,ci)=>{const C=COUNTRIES[c];const avg=k=>C.wines.reduce((t,w)=>t+w.aro[k],0)/C.wines.length;
+    s+=`<polygon points="${axes.map((a,i)=>pt(i,avg(a[0])).join(",")).join(" ")}" fill="none" stroke="${C.accent}" stroke-width="2" stroke-dasharray="${dash[ci]}"/>`;});
+  s+=`</svg>`;
+  document.getElementById("natradar").innerHTML=s;
+  document.getElementById("rad-legend").innerHTML=ORDER.map((c,ci)=>`<span class="lchip static"><svg width="26" height="8" style="width:26px"><line x1="0" y1="4" x2="26" y2="4" stroke="${COUNTRIES[c].accent}" stroke-width="2" stroke-dasharray="${dash[ci]}"/></svg>${COUNTRIES[c].name}</span>`).join("");
+}
+
+function buildIndex(){
+  const pts=allWines().map(w=>({...w,raw:w.pal.alc+w.aro.bf+w.aro.ok-w.pal.acid-w.aro.sv}));
+  const mn=Math.min(...pts.map(p=>p.raw)),mx=Math.max(...pts.map(p=>p.raw));
+  const idx=r=>(r-mn)/(mx-mn)*100;
+  const W=700,L=64,Rr=652,rows={italy:58,france:96,spain:134,usa:172};
+  const sx=v=>L+v/100*(Rr-L);
+  let s=`<svg viewBox="0 0 ${W} 240" role="img" aria-label="Indice Ancien-Nouveau Monde par cépage">`;
+  for(let v=0;v<=100;v+=25)s+=`<line x1="${sx(v)}" y1="40" x2="${sx(v)}" y2="196" stroke="rgba(201,162,75,.08)"/><text x="${sx(v)}" y="212" text-anchor="middle" class="axtick">${v}</text>`;
+  s+=`<text x="${L}" y="230" class="axlabel" text-anchor="start">← Ancien Monde</text><text x="${Rr}" y="230" class="axlabel" text-anchor="end">Nouveau Monde →</text>`;
+  ORDER.forEach(c=>{const C=COUNTRIES[c];const y=rows[c];s+=`<text x="${L-10}" y="${y+3}" text-anchor="end" class="boxlab">${C.name}</text>`;
+    let sum=0;C.wines.forEach(w=>{const r=pts.find(p=>p.id===w.id).raw;sum+=r;s+=`<circle cx="${sx(idx(r))}" cy="${y}" r="4" fill="${C.accent}" fill-opacity=".7"/>`;});
+    const a=sx(idx(sum/C.wines.length));s+=`<line x1="${a}" y1="${y-13}" x2="${a}" y2="${y+13}" stroke="${C.accent}" stroke-width="2.5"/>`;});
+  s+=`</svg>`;
+  document.getElementById("indexchart").innerHTML=s;
+  document.getElementById("formula").textContent="Indice = Alcool + Fruits noirs + Boisé − Acidité − Cuir/terre, normalisé sur 0–100.  Points = cépages · trait vertical = moyenne nationale.";
+  document.getElementById("ins-index").textContent="Un seul chiffre auditable. La France et l'Italie ancrent l'Ancien Monde, les États-Unis le Nouveau, l'Espagne fait le pont — et l'on repère aussitôt les cépages qui débordent de leur camp.";
+}
+
+function buildAnalytics(){buildBoxplots();buildParallel();buildScatter();buildNatRadar();buildIndex();}
+
 const nav=document.getElementById("nav");
 const navlinks=[...document.querySelectorAll(".navlinks a")];
 addEventListener("scroll",()=>{nav.classList.toggle("scrolled",scrollY>30);},{passive:true});
-// défilement interne sans navigation (évite l'invite « ouvrir le lien » en iframe)
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener("click",e=>{
-    const el=document.getElementById(a.getAttribute("href").slice(1));
-    if(el){ e.preventDefault(); el.scrollIntoView({behavior:"smooth",block:"start"}); }
-  });
+// défilement interne piloté en JS, sans href navigable (évite l'invite « ouvrir le lien » en iframe)
+function goTo(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
+document.querySelectorAll("[data-target]").forEach(a=>{
+  a.addEventListener("click",()=>goTo(a.dataset.target));
+  a.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();goTo(a.dataset.target);}});
 });
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("in");}),{threshold:.10});
 document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 const secObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;navlinks.forEach(a=>a.classList.toggle("active",a.dataset.sec===id));}}),{rootMargin:"-45% 0px -50% 0px"});
-["nations","glass","spectrum","table","lexicon"].forEach(id=>{const s=document.getElementById(id);if(s)secObs.observe(s);});
+["nations","glass","spectrum","table","analytics","lexicon"].forEach(id=>{const s=document.getElementById(id);if(s)secObs.observe(s);});
 
-buildNations(); buildCountryTabs();
+buildNations(); buildCountryTabs(); buildAnalytics();
 selectCountry("italy",false);
 </script>
 </body>
