@@ -37,6 +37,12 @@
   nav{position:fixed; top:0; left:0; right:0; height:var(--nav); z-index:50; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(18px,4vw,48px); background:rgba(22,16,15,.55); backdrop-filter:blur(14px) saturate(1.2); border-bottom:1px solid transparent; transition:border-color .4s, background .4s}
   nav.scrolled{border-bottom-color:var(--line); background:rgba(18,13,12,.82)}
   .brand{font-family:var(--serif); font-size:21px; font-weight:500; display:flex; align-items:center; gap:9px}
+  .navleft{display:flex; align-items:center; gap:18px}
+  .modetoggle{display:flex; gap:3px; padding:3px; border:1px solid var(--line); border-radius:99px; background:rgba(0,0,0,.2)}
+  .modebtn{font-family:var(--label); text-transform:uppercase; letter-spacing:.14em; font-size:10px; color:var(--muted); background:none; border:0; border-radius:99px; padding:6px 13px; cursor:pointer; transition:all .3s}
+  .modebtn:hover{color:var(--ink)}
+  .modebtn[aria-pressed="true"]{color:var(--bg); background:linear-gradient(180deg,var(--gold-bright),var(--gold))}
+  @media(max-width:520px){.brand{font-size:18px} .navleft{gap:11px}}
   .brand .mark{width:8px; height:8px; border-radius:50%; background:var(--gold); box-shadow:0 0 10px rgba(201,162,75,.6)}
   .brand em{font-style:italic; color:var(--gold-bright)}
   .navlinks{display:flex; gap:clamp(9px,2.2vw,26px); font-family:var(--label); text-transform:uppercase; letter-spacing:.16em; font-size:11px}
@@ -221,7 +227,13 @@
 <body>
 
 <nav id="nav">
-  <div class="brand"><span class="mark"></span>Notes de <em>Cave</em></div>
+  <div class="navleft">
+    <div class="brand"><span class="mark"></span>Notes de <em>Cave</em></div>
+    <div class="modetoggle" role="group" aria-label="Type de vin">
+      <button class="modebtn" data-mode="rouge" aria-pressed="true">Rouge</button>
+      <button class="modebtn" data-mode="blanc" aria-pressed="false">Blanc</button>
+    </div>
+  </div>
   <div class="navlinks">
     <a data-target="nations" data-sec="nations" tabindex="0">Les Nations</a>
     <a data-target="glass" data-sec="glass" tabindex="0">Le Verre</a>
@@ -234,7 +246,7 @@
 
 <header class="hero wrap" id="top">
   <div class="kicker reveal">Un guide pratique du verre</div>
-  <h1 class="reveal">Le Monde<br>du <em>Vin Rouge</em></h1>
+  <h1 class="reveal">Le Monde<br>du <em>Vin</em></h1>
   <p class="lede reveal">Chaque vin répond aux mêmes quatre questions — <b>voir, sentir, goûter, juger</b>. Explorez quatre grandes nations — l'Italie, la France, l'Espagne et les États-Unis — et voyez, critère par critère, ce qui les distingue.</p>
   <a data-target="nations" class="scrollcue reveal">Commencer<span class="ln"></span></a>
 </header>
@@ -315,7 +327,7 @@
   <div class="wrap">
     <div class="seclabel reveal">Le pays d'un coup d'œil</div>
     <h2 class="sectitle reveal">L'<em>Éventail</em></h2>
-    <p class="secintro reveal">Du plus pâle et délicat au plus opaque et puissant — les rouges d'<span id="specCountry">Italie</span>. Touchez une carte pour le verser dans le verre.</p>
+    <p class="secintro reveal">Du plus pâle et délicat au plus opaque et puissant — les <span id="specType">rouges</span> d'<span id="specCountry">Italie</span>. Touchez une carte pour le verser dans le verre.</p>
     <div class="spectrum reveal" id="spectrumGrid"></div>
   </div>
 </section>
@@ -324,7 +336,7 @@
   <div class="wrap">
     <div class="seclabel reveal">Leur juste place</div>
     <h2 class="sectitle reveal">La <em>Table</em></h2>
-    <p class="secintro reveal">Accordez le poids au poids, l'acidité au gras. Voici les classiques pour les rouges d'<span id="tableCountry">Italie</span>.</p>
+    <p class="secintro reveal">Accordez le poids au poids, l'acidité au gras. Voici les classiques pour les <span id="tableType">rouges</span> d'<span id="tableCountry">Italie</span>.</p>
     <div class="pairing reveal" id="pairing"></div>
   </div>
 </section>
@@ -334,7 +346,7 @@
   <div class="wrap">
     <div class="seclabel reveal">Pour les amateurs de chiffres</div>
     <h2 class="sectitle reveal">Le Survol <em>Analytique</em></h2>
-    <p class="secintro reveal">Au-delà du profil de chaque vin : la <b>dispersion</b>, les <b>corrélations</b> et un <b>chiffre défendable</b>. Cinq lectures, 25 cépages. <span>Données structurelles tirées des profils ; prix et notes indicatifs.</span></p>
+    <p class="secintro reveal">Au-delà du profil de chaque vin : la <b>dispersion</b>, les <b>corrélations</b> et un <b>chiffre défendable</b>. Cinq lectures, tous les cépages. <span>Données structurelles tirées des profils ; prix et notes indicatifs.</span></p>
     <div class="agrid">
       <div class="apanel reveal" style="grid-column:1/-1">
         <div class="ahead"><span class="anum">01</span><h3>Distribution par pays — la moyenne ment</h3></div>
@@ -342,7 +354,7 @@
         <div id="boxplots"></div>
       </div>
       <div class="apanel reveal" style="grid-column:1/-1">
-        <div class="ahead"><span class="anum">02</span><h3>Coordonnées parallèles — 25 cépages d'un trait</h3></div>
+        <div class="ahead"><span class="anum">02</span><h3>Coordonnées parallèles — tous les cépages d&rsquo;un trait</h3></div>
         <p class="ains">Chaque ligne est un cépage, du corps au boisé. Survolez une nation pour l'isoler, cliquez pour la fixer.</p>
         <div class="plegend" id="pc-legend"></div>
         <div id="parallel"></div>
@@ -392,7 +404,7 @@
 </footer>
 
 <script>
-const COUNTRIES = {
+const COUNTRIES_R = {
   italy:{ name:"Italie", accent:"#c46c3a", pos:{x:33,y:27}, tag:"Ancien Monde · savoureux",
     philo:"Une mosaïque de cépages locaux, unis par une acidité vive qui appelle la table. Le fruit reste en retrait derrière le cuir, l'herbe et la terre.",
     signature:"Nebbiolo · Sangiovese · Aglianico",
@@ -441,11 +453,11 @@ const COUNTRIES = {
 };
 const ORDER=["italy","france","spain","usa"];
 
-const AXES=[{k:"rf",label:"Fruits rouges",desc:"griotte · framboise"},{k:"bf",label:"Fruits noirs",desc:"mûre · prune · figue"},{k:"sp",label:"Épices",desc:"poivre · réglisse · épices douces"},{k:"ok",label:"Boisé",desc:"vanille · cèdre · fumé"},{k:"sv",label:"Cuir & terre",desc:"cuir · goudron · herbes"},{k:"fl",label:"Floral",desc:"rose · violette"}];
-const PAL=[{k:"body",name:"Corps",tip:"Le poids en bouche — lait écrémé vs. crème.",words:["—","léger","léger–moyen","moyen","moyen–corsé","corsé"]},{k:"tannin",name:"Tanins",tip:"La sensation asséchante des peaux ; quantité et texture.",words:["—","faibles","faibles–moyens","moyens","moyens–élevés","élevés"]},{k:"acid",name:"Acidité",tip:"La fraîcheur qui fait saliver et relève les plats.",words:["—","faible","faible–moyenne","moyenne","moyenne–élevée","élevée"]},{k:"alc",name:"Alcool",tip:"Perçu comme une chaleur ; donne du corps ou brûle.",words:["—","faible","faible–moyen","moyen","moyen–élevé","élevé"]}];
-const APP=[{k:"depth",name:"Intensité de la robe",tip:"Du pâle et translucide au profond et opaque."},{k:"garnet",name:"Reflets grenat",tip:"À quel point le bord vire au brique-orangé — indice du cépage et de l'âge."},{k:"visc",name:"Viscosité (larmes)",tip:"Les « larmes » qui s'accrochent au verre — liées à l'alcool et au sucre."}];
+const AXES_R=[{k:"rf",label:"Fruits rouges",desc:"griotte · framboise"},{k:"bf",label:"Fruits noirs",desc:"mûre · prune · figue"},{k:"sp",label:"Épices",desc:"poivre · réglisse · épices douces"},{k:"ok",label:"Boisé",desc:"vanille · cèdre · fumé"},{k:"sv",label:"Cuir & terre",desc:"cuir · goudron · herbes"},{k:"fl",label:"Floral",desc:"rose · violette"}];
+const PAL_R=[{k:"body",name:"Corps",tip:"Le poids en bouche — lait écrémé vs. crème.",words:["—","léger","léger–moyen","moyen","moyen–corsé","corsé"]},{k:"tannin",name:"Tanins",tip:"La sensation asséchante des peaux ; quantité et texture.",words:["—","faibles","faibles–moyens","moyens","moyens–élevés","élevés"]},{k:"acid",name:"Acidité",tip:"La fraîcheur qui fait saliver et relève les plats.",words:["—","faible","faible–moyenne","moyenne","moyenne–élevée","élevée"]},{k:"alc",name:"Alcool",tip:"Perçu comme une chaleur ; donne du corps ou brûle.",words:["—","faible","faible–moyen","moyen","moyen–élevé","élevé"]}];
+const APP_R=[{k:"depth",name:"Intensité de la robe",tip:"Du pâle et translucide au profond et opaque."},{k:"garnet",name:"Reflets grenat",tip:"À quel point le bord vire au brique-orangé — indice du cépage et de l'âge."},{k:"visc",name:"Viscosité (larmes)",tip:"Les « larmes » qui s'accrochent au verre — liées à l'alcool et au sucre."}];
 
-let activeCountry="italy", activeWines=COUNTRIES.italy.wines, current=null;
+let activeCountry="italy", activeWines=[], current=null;
 
 const RC=140,RY=130,R=98;
 function pt(i,val){const a=-Math.PI/2+i*(Math.PI*2/AXES.length);const r=(val/5)*R;return [RC+r*Math.cos(a),RY+r*Math.sin(a)];}
@@ -473,7 +485,7 @@ function buildNations(){
   });
   s+=`<text class="nmapaxis" x="60" y="430" text-anchor="start">← Retenue · Ancien Monde</text>`;
   s+=`<text class="nmapaxis" x="560" y="430" text-anchor="end">Maturité · Nouveau Monde →</text>`;
-  s+=`<text class="nmapaxis" x="30" y="230" transform="rotate(-90 30 230)" text-anchor="middle" dominant-baseline="middle">Terreux & savoureux ←→ Fruité & généreux</text>`;
+  s+=`<text class="nmapaxis" x="30" y="230" transform="rotate(-90 30 230)" text-anchor="middle" dominant-baseline="middle">${CFG.mapYLabel}</text>`;
   ORDER.forEach(c=>{const C=COUNTRIES[c];const x=mx(C.pos.x),y=my(C.pos.y);
     s+=`<g class="ndot" data-mapc="${c}"><circle cx="${x}" cy="${y}" r="15" fill="${C.accent}" opacity="0.18"/><circle class="core" cx="${x}" cy="${y}" r="8" fill="${C.accent}"/><text class="nmaplabel" x="${x+16}" y="${y+5}">${C.name}</text></g>`;
   });
@@ -526,11 +538,11 @@ function select(id){
   document.documentElement.style.setProperty("--wine-rim",w.app.rim);
   document.getElementById("gs0").setAttribute("stop-color",w.app.rim);
   document.getElementById("gs1").setAttribute("stop-color",w.app.core);
-  document.getElementById("liquid").setAttribute("opacity",(0.34+w.app.depth*0.12).toFixed(2));
+  document.getElementById("liquid").setAttribute("opacity",CFG.glassOp(w).toFixed(2));
   document.getElementById("wName").textContent=w.name;
   document.getElementById("wMeta").textContent=w.region;
   document.getElementById("appMeters").innerHTML=APP.map(m=>`<div class="meter"><span class="lab tip" tabindex="0" data-tip="${m.tip}">${m.name}</span><span class="dots">${dotsHTML(w.app[m.k])}</span></div>`).join("");
-  document.getElementById("appHint").textContent=w.app.garnet>=4?"Robe pâle et bord brique-orangé — la signature d'un cépage à peau fine, fait pour la garde.":(w.app.depth>=5?"Très coloré et presque opaque — un vin à peau épaisse, né sous un climat chaud.":"");
+  document.getElementById("appHint").textContent=CFG.hint(w);
   const poly=document.getElementById("aromaPoly");poly.style.opacity=0;
   setTimeout(()=>{poly.setAttribute("points",polyStr(k=>w.aro[k]));poly.style.opacity=.92;},180);
   AXES.forEach((a,i)=>{const[x,y]=pt(i,w.aro[a.k]);const c=document.getElementById("rp"+i);c.setAttribute("cx",x);c.setAttribute("cy",y);});
@@ -549,18 +561,101 @@ function row(k,val){return `<div class="vrow"><span class="vk">${k}</span><span 
 /* ===================== LE SURVOL ANALYTIQUE ===================== */
 const COL={gold:"#c9a24b",goldB:"#e6c374",ink:"#ede3d4",muted:"#a8987f",faint:"#6c5e50",bg:"#16100f"};
 // prix (€) et note (/100) indicatifs par cépage
-const MARKET={
+const MARKET_R={
   nebbiolo:[55,94],sangiovese:[35,92],barbera:[18,89],monte:[14,87],nero:[16,88],primitivo:[17,88],aglianico:[30,92],
   pinot:[45,93],gamay:[16,88],merlot:[30,90],grenache:[35,91],syrah:[40,93],cabfr:[55,94],
   temp:[22,91],mencia:[18,90],bobal:[12,87],tinto:[40,93],garnacha:[45,94],monastrell:[16,89],
   cabnapa:[70,94],pinotor:[40,92],merlotwa:[25,90],zin:[22,89],syrahus:[30,91],petite:[28,90]
 };
+
+/* ===================== MODE BLANC ===================== */
+const AXES_W=[{k:"cit",label:"Agrumes",desc:"citron · pamplemousse"},{k:"orch",label:"Fruits du verger",desc:"pomme · poire · coing"},{k:"trop",label:"Fruits exotiques",desc:"ananas · mangue · passion"},{k:"ok",label:"Boisé / brioché",desc:"vanille · beurre · brioche"},{k:"min",label:"Minéral",desc:"craie · pierre à fusil · iode"},{k:"fl",label:"Floral",desc:"fleur blanche · acacia"}];
+const PAL_W=[{k:"body",name:"Corps",tip:"Le poids en bouche — d'aérien à gras et crémeux.",words:["—","léger","léger–moyen","moyen","moyen–ample","ample"]},{k:"sugar",name:"Sucrosité",tip:"Du sec absolu au liquoreux.",words:["—","sec","sec tendre","demi-sec","moelleux","liquoreux"]},{k:"acid",name:"Acidité",tip:"Le nerf des blancs : la fraîcheur qui fait saliver.",words:["—","faible","faible–moyenne","moyenne","moyenne–élevée","élevée"]},{k:"alc",name:"Alcool",tip:"Perçu comme une chaleur ; donne du corps ou brûle.",words:["—","faible","faible–moyen","moyen","moyen–élevé","élevé"]}];
+const APP_W=[{k:"depth",name:"Intensité de la robe",tip:"Du jaune pâle, presque incolore, à l'or profond."},{k:"amber",name:"Reflets dorés",tip:"Du vert-pâle (jeune, vif) à l'or-ambré (riche, boisé ou évolué)."},{k:"visc",name:"Viscosité (larmes)",tip:"Les « larmes » au verre — liées à l'alcool et au sucre."}];
+const MARKET_W={
+  pgrigio:[12,86],soave:[16,88],vermentino:[15,88],fiano:[22,90],verdicchio:[16,89],
+  chardbg:[55,94],sauvlo:[24,91],chenin:[28,92],rieslal:[26,91],viognier:[35,91],
+  albarino:[18,90],verdejo:[12,88],godello:[22,91],viura:[16,89],txakoli:[18,88],
+  chardus:[35,91],sauvus:[20,89],pgris:[22,89],rieslus:[18,89],viogus:[24,89]
+};
+const COUNTRIES_W={
+  italy:{ name:"Italie", accent:"#c46c3a", pos:{x:30,y:30}, tag:"Vifs & salins",
+    philo:"Des blancs longtemps sous-estimés, aujourd'hui vibrants : vifs, salins, souvent discrets sur le fruit, faits pour la table.",
+    signature:"Vermentino · Garganega · Fiano",
+    wines:[
+      {id:"pgrigio",name:"Pinot Grigio",region:"Vénétie · Frioul",app:{core:"#dcd486",rim:"#ece69f",depth:1,amber:1,visc:2},pal:{body:2,sugar:1,acid:4,alc:3},aro:{cit:4,orch:3,trop:1,ok:1,min:3,fl:2},con:{climate:"Continental frais",structure:"Léger, net, agrumes discrets",dev:"À boire jeune",win:"1–3 ans",pair:"Antipasti, poisson, salades"},sig:"La simplicité rafraîchissante"},
+      {id:"soave",name:"Garganega (Soave)",region:"Vénétie",app:{core:"#dcc95c",rim:"#ecd98a",depth:2,amber:2,visc:3},pal:{body:3,sugar:1,acid:4,alc:3},aro:{cit:3,orch:4,trop:1,ok:2,min:3,fl:4},con:{climate:"Continental",structure:"Floral et amande, texture souple",dev:"Gagne en finesse (Soave Classico)",win:"2–6 ans",pair:"Risotto, poisson, volaille"},sig:"L'amande et la fleur"},
+      {id:"vermentino",name:"Vermentino",region:"Sardaigne · Toscane côtière",app:{core:"#d3d07a",rim:"#e6e29e",depth:2,amber:1,visc:2},pal:{body:3,sugar:1,acid:4,alc:4},aro:{cit:4,orch:2,trop:2,ok:1,min:4,fl:2},con:{climate:"Méditerranéen côtier",structure:"Salin et zesté, légère amertume",dev:"À boire jeune",win:"1–4 ans",pair:"Fruits de mer, poisson grillé"},sig:"L'embrun marin"},
+      {id:"verdicchio",name:"Verdicchio",region:"Marches",app:{core:"#d6cf6e",rim:"#e9e296",depth:2,amber:1,visc:2},pal:{body:3,sugar:1,acid:5,alc:4},aro:{cit:4,orch:3,trop:1,ok:1,min:4,fl:3},con:{climate:"Continental",structure:"Tendu et salin, finale amère typique",dev:"Vieillit étonnamment bien",win:"2–8 ans",pair:"Poisson, coquillages, friture"},sig:"La tension adriatique"},
+      {id:"fiano",name:"Fiano",region:"Campanie",app:{core:"#d2b544",rim:"#e6c870",depth:3,amber:3,visc:4},pal:{body:4,sugar:1,acid:3,alc:4},aro:{cit:2,orch:3,trop:2,ok:2,min:3,fl:3},con:{climate:"Volcanique d'altitude",structure:"Riche et cireux — rare blanc du Sud de garde",dev:"Miel et noisette avec l'âge",win:"3–10 ans",pair:"Poisson en sauce, fromages doux"},sig:"Le blanc qui vieillit"},
+    ]},
+  france:{ name:"France", accent:"#7e2d46", pos:{x:24,y:46}, tag:"Le terroir ciselé",
+    philo:"Le terroir roi, du Chardonnay ciselé de Bourgogne au Sauvignon nerveux de la Loire — fraîcheur, minéralité, élégance.",
+    signature:"Chardonnay · Sauvignon · Riesling",
+    wines:[
+      {id:"sauvlo",name:"Sauvignon Blanc",region:"Loire · Sancerre",app:{core:"#d6d77e",rim:"#e9e7a4",depth:1,amber:1,visc:2},pal:{body:2,sugar:1,acid:5,alc:3},aro:{cit:5,orch:2,trop:2,ok:1,min:5,fl:2},con:{climate:"Continental frais, silex",structure:"Vif et droit — agrumes, pierre à fusil",dev:"À boire jeune",win:"1–5 ans",pair:"Crottin de chèvre, fruits de mer, asperge"},sig:"La pierre à fusil"},
+      {id:"rieslal",name:"Riesling",region:"Alsace",app:{core:"#dccf66",rim:"#ece28e",depth:2,amber:1,visc:2},pal:{body:2,sugar:2,acid:5,alc:3},aro:{cit:4,orch:3,trop:2,ok:1,min:5,fl:4},con:{climate:"Continental sec, ensoleillé",structure:"Pur, floral, minéral — sec à tendre",dev:"Note pétrolée typique en vieillissant",win:"3–15 ans",pair:"Choucroute, poisson, cuisine épicée"},sig:"La pureté alsacienne"},
+      {id:"chenin",name:"Chenin Blanc",region:"Loire · Vouvray",app:{core:"#d8c258",rim:"#ecd584",depth:2,amber:2,visc:3},pal:{body:3,sugar:3,acid:5,alc:3},aro:{cit:3,orch:4,trop:2,ok:2,min:4,fl:3},con:{climate:"Continental",structure:"Caméléon — du sec au moelleux, acidité folle",dev:"Garde exceptionnelle",win:"3–20 ans",pair:"Apéritif, sucré-salé, foie gras (moelleux)"},sig:"Le caméléon de la Loire"},
+      {id:"viognier",name:"Viognier",region:"Rhône · Condrieu",app:{core:"#d6b948",rim:"#ead072",depth:3,amber:2,visc:4},pal:{body:4,sugar:1,acid:2,alc:4},aro:{cit:2,orch:3,trop:3,ok:2,min:2,fl:5},con:{climate:"Continental ensoleillé",structure:"Opulent et parfumé — abricot, fleurs",dev:"À boire jeune",win:"1–4 ans",pair:"Cuisine épicée, poisson riche, volaille"},sig:"Le parfum d'abricot"},
+      {id:"chardbg",name:"Chardonnay",region:"Bourgogne · Meursault",app:{core:"#d3bb4a",rim:"#e7cd76",depth:3,amber:3,visc:4},pal:{body:4,sugar:1,acid:4,alc:4},aro:{cit:3,orch:4,trop:1,ok:4,min:4,fl:2},con:{climate:"Continental frais",structure:"Ample, beurré, minéral — l'étalon mondial",dev:"Noisette et miel avec l'âge",win:"3–12 ans",pair:"Volaille crémée, poisson, fromage"},sig:"L'étalon du monde"},
+    ]},
+  spain:{ name:"Espagne", accent:"#c98a3a", pos:{x:42,y:34}, tag:"L'Atlantique salin",
+    philo:"Atlantique et salin au nord-ouest, généreux ailleurs — une nouvelle vague de blancs vifs et marins.",
+    signature:"Albariño · Verdejo · Godello",
+    wines:[
+      {id:"txakoli",name:"Txakoli",region:"Pays basque",app:{core:"#d8d886",rim:"#ebe7ad",depth:1,amber:1,visc:1},pal:{body:1,sugar:1,acid:5,alc:2},aro:{cit:5,orch:2,trop:1,ok:1,min:4,fl:2},con:{climate:"Atlantique, côtier",structure:"Léger, perlant, citronné",dev:"À boire très jeune",win:"1–2 ans",pair:"Pintxos, anchois, friture"},sig:"Le perlant basque"},
+      {id:"albarino",name:"Albariño",region:"Rías Baixas",app:{core:"#d6d27a",rim:"#e9e4a0",depth:1,amber:1,visc:2},pal:{body:2,sugar:1,acid:5,alc:3},aro:{cit:5,orch:2,trop:3,ok:1,min:5,fl:3},con:{climate:"Atlantique, océanique",structure:"Salin et zesté — vif, marin",dev:"À boire jeune",win:"1–4 ans",pair:"Fruits de mer, poulpe, poisson"},sig:"Le sel de l'Atlantique"},
+      {id:"verdejo",name:"Verdejo",region:"Rueda",app:{core:"#d8d172",rim:"#ebe39a",depth:2,amber:1,visc:2},pal:{body:3,sugar:1,acid:4,alc:4},aro:{cit:4,orch:2,trop:2,ok:1,min:3,fl:2},con:{climate:"Continental d'altitude",structure:"Aromatique et herbacé, finale amère",dev:"À boire jeune",win:"1–3 ans",pair:"Tapas, poisson frit, fromage frais"},sig:"L'herbe et l'agrume"},
+      {id:"godello",name:"Godello",region:"Valdeorras",app:{core:"#d6c558",rim:"#ead886",depth:2,amber:2,visc:3},pal:{body:3,sugar:1,acid:4,alc:4},aro:{cit:3,orch:4,trop:2,ok:2,min:4,fl:2},con:{climate:"Atlantique, schistes",structure:"Texturé et minéral — la révélation galicienne",dev:"Gagne en complexité",win:"2–6 ans",pair:"Poisson, volaille, riz"},sig:"La révélation galicienne"},
+      {id:"viura",name:"Viura",region:"Rioja blanco",app:{core:"#d4bf52",rim:"#e8d27e",depth:2,amber:3,visc:3},pal:{body:3,sugar:1,acid:3,alc:4},aro:{cit:3,orch:3,trop:1,ok:3,min:2,fl:3},con:{climate:"Continental tempéré",structure:"Du frais au boisé crémeux (style traditionnel)",dev:"Les versions élevées vieillissent longtemps",win:"2–10 ans",pair:"Volaille, poisson en sauce, jambon"},sig:"Le classique de la Rioja"},
+    ]},
+  usa:{ name:"États-Unis", accent:"#b23a2e", pos:{x:84,y:80}, tag:"Mûrs & opulents",
+    philo:"Maturité et générosité : Chardonnay riche et boisé, Sauvignon mûr — le fruit et la texture priment.",
+    signature:"Chardonnay · Sauvignon · Riesling",
+    wines:[
+      {id:"rieslus",name:"Riesling",region:"Washington · Finger Lakes",app:{core:"#dccf66",rim:"#ece28e",depth:2,amber:1,visc:3},pal:{body:2,sugar:3,acid:5,alc:3},aro:{cit:4,orch:3,trop:2,ok:1,min:3,fl:4},con:{climate:"Continental frais",structure:"Souvent tendre — citron, fleur, acidité vive",dev:"Vieillit bien",win:"2–10 ans",pair:"Cuisine épicée, porc, apéritif"},sig:"Le Riesling tendre"},
+      {id:"sauvus",name:"Sauvignon Blanc",region:"Californie",app:{core:"#d6cf68",rim:"#e9e08f",depth:2,amber:2,visc:3},pal:{body:3,sugar:1,acid:4,alc:4},aro:{cit:4,orch:2,trop:4,ok:2,min:2,fl:2},con:{climate:"Chaud",structure:"Plus mûr et rond qu'en Loire — fruit tropical",dev:"À boire jeune",win:"1–4 ans",pair:"Salades, poisson, chèvre"},sig:"Le Sauvignon ensoleillé"},
+      {id:"pgris",name:"Pinot Gris",region:"Willamette · Oregon",app:{core:"#d8c75c",rim:"#ebd888",depth:2,amber:2,visc:3},pal:{body:3,sugar:2,acid:4,alc:4},aro:{cit:3,orch:4,trop:2,ok:1,min:2,fl:2},con:{climate:"Frais, pluvieux",structure:"Plus riche que l'italien — poire, légère rondeur",dev:"À boire jeune",win:"1–4 ans",pair:"Saumon, volaille, cuisine asiatique"},sig:"Le gris de l'Oregon"},
+      {id:"viogus",name:"Viognier",region:"Californie",app:{core:"#d4b446",rim:"#e8cb70",depth:3,amber:2,visc:4},pal:{body:4,sugar:1,acid:2,alc:5},aro:{cit:2,orch:3,trop:4,ok:3,min:1,fl:5},con:{climate:"Chaud",structure:"Très parfumé et opulent — abricot, fleurs",dev:"À boire jeune",win:"1–3 ans",pair:"Cuisine épicée, poisson riche"},sig:"L'abricot californien"},
+      {id:"chardus",name:"Chardonnay",region:"Napa · Sonoma",app:{core:"#d0a838",rim:"#e4bf60",depth:3,amber:4,visc:5},pal:{body:5,sugar:1,acid:3,alc:5},aro:{cit:2,orch:4,trop:4,ok:5,min:1,fl:1},con:{climate:"Méditerranéen chaud",structure:"Opulent, beurré, boisé — ananas et vanille",dev:"À boire dans sa jeunesse riche",win:"2–8 ans",pair:"Homard, volaille crémée, plats riches"},sig:"L'opulence boisée"},
+    ]},
+};
+
+// configuration par mode
+const MODECFG={
+  rouge:{ countries:COUNTRIES_R, axes:AXES_R, pal:PAL_R, app:APP_R, market:MARKET_R,
+    typeWord:"rouges", mapYLabel:"Terreux & savoureux ←→ Fruité & généreux",
+    pcAroma:[["bf","Fruits noirs"],["ok","Boisé"]],
+    glassOp:w=>0.34+w.app.depth*0.12,
+    hint:w=>w.app.garnet>=4?"Robe pâle et bord brique-orangé — la signature d'un cépage à peau fine, fait pour la garde.":(w.app.depth>=5?"Très coloré et presque opaque — un vin à peau épaisse, né sous un climat chaud.":""),
+    indexRaw:w=>w.pal.alc+w.aro.bf+w.aro.ok-w.pal.acid-w.aro.sv,
+    indexFormula:"Indice = Alcool + Fruits noirs + Boisé − Acidité − Cuir/terre, normalisé sur 0–100.  Points = cépages · trait = moyenne nationale.",
+    indexInsight:"Un seul chiffre auditable. La France et l'Italie ancrent l'Ancien Monde, les États-Unis le Nouveau, l'Espagne fait le pont — et l'on repère aussitôt les cépages qui débordent de leur camp.",
+    boxInsight:"Barre claire = médiane, boîte = 50 % central, moustaches = min–max. L'acidité italienne est haute et resserrée ; l'alcool grimpe et s'étale vers les États-Unis. Les fourchettes se chevauchent : le style national est une tendance, pas une règle." },
+  blanc:{ countries:COUNTRIES_W, axes:AXES_W, pal:PAL_W, app:APP_W, market:MARKET_W,
+    typeWord:"blancs", mapYLabel:"Vif & minéral ←→ Mûr & opulent",
+    pcAroma:[["trop","Fruits exotiques"],["min","Minéral"]],
+    glassOp:w=>0.16+w.app.depth*0.11,
+    hint:w=>w.app.amber>=4?"Robe dorée soutenue — un blanc riche, boisé ou déjà évolué.":(w.app.depth<=1?"Robe très pâle aux reflets verts — un blanc vif et jeune.":""),
+    indexRaw:w=>w.pal.alc+w.aro.trop+w.aro.ok-w.pal.acid-w.aro.min,
+    indexFormula:"Indice = Alcool + Fruits exotiques + Boisé − Acidité − Minéral, normalisé sur 0–100.  Points = cépages · trait = moyenne nationale.",
+    indexInsight:"Même logique pour les blancs : la fraîcheur atlantique (Italie, Espagne, Loire) ancre l'Ancien Monde vif ; le Chardonnay boisé de Californie tire seul vers le Nouveau.",
+    boxInsight:"Barre claire = médiane, boîte = 50 % central, moustaches = min–max. L'acidité est le nerf des blancs : haute et resserrée pour l'Italie et l'Espagne atlantique, plus basse et dispersée aux États-Unis, où l'alcool grimpe." }
+};
+let COUNTRIES,AXES,PAL,APP,MARKET,CFG;
+function setMode(m){
+  CFG=MODECFG[m]; COUNTRIES=CFG.countries; AXES=CFG.axes; PAL=CFG.pal; APP=CFG.app; MARKET=CFG.market;
+  document.querySelectorAll(".modebtn").forEach(b=>b.setAttribute("aria-pressed",b.dataset.mode===m));
+  ["specType","tableType"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=CFG.typeWord;});
+  buildNations(); buildAnalytics(); buildCountryTabs();
+  selectCountry(ORDER[0],false);
+}
 function allWines(){return ORDER.flatMap(c=>COUNTRIES[c].wines.map(w=>({...w,country:c,accent:COUNTRIES[c].accent})));}
 function quart(arr){const a=[...arr].sort((x,y)=>x-y),n=a.length;const q=p=>{const i=(n-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return a[lo]+(a[hi]-a[lo])*(i-lo);};return{min:a[0],q1:q(.25),med:q(.5),q3:q(.75),max:a[n-1]};}
 function staticLegend(){return ORDER.map(c=>`<span class="lchip static"><span style="background:${COUNTRIES[c].accent}"></span>${COUNTRIES[c].name}</span>`).join("");}
 
 function buildBoxplots(){
-  const crit=[["body","Corps"],["tannin","Tanins"],["acid","Acidité"],["alc","Alcool"]];
+  const crit=PAL.map(p=>[p.k,p.name]);
   const W=360,L=86,Rr=346,rows=[34,66,98,130];
   const sx=v=>L+(v-0.5)/5*(Rr-L);
   let html="";
@@ -578,11 +673,11 @@ function buildBoxplots(){
     html+=`<div class="boxblock"><h4>${label}</h4>${s}</svg></div>`;
   });
   document.getElementById("boxplots").innerHTML=html;
-  document.getElementById("ins-box").textContent="Barre claire = médiane, boîte = 50 % central, moustaches = min–max. L'acidité italienne est haute et resserrée ; l'alcool grimpe et s'étale vers les États-Unis. Les fourchettes se chevauchent : le style national est une tendance, pas une règle.";
+  document.getElementById("ins-box").textContent=CFG.boxInsight;
 }
 
 function buildParallel(){
-  const axes=[["body","Corps","pal"],["tannin","Tanins","pal"],["acid","Acidité","pal"],["alc","Alcool","pal"],["bf","Fruits noirs","aro"],["ok","Boisé","aro"]];
+  const axes=PAL.map(p=>[p.k,p.name,"pal"]).concat(CFG.pcAroma.map(a=>[a[0],a[1],"aro"]));
   const W=700,T=30,B=318,L=44,Rr=656;
   const ax=i=>L+i/(axes.length-1)*(Rr-L), ay=v=>B-(v-1)/4*(B-T);
   let s=`<svg viewBox="0 0 ${W} 348" id="pcsvg" role="img" aria-label="Coordonnées parallèles des cépages">`;
@@ -620,7 +715,7 @@ function buildScatter(){
 }
 
 function buildNatRadar(){
-  const axes=[["rf","Fruits rouges"],["bf","Fruits noirs"],["sp","Épices"],["ok","Boisé"],["sv","Cuir & terre"],["fl","Floral"]];
+  const axes=AXES.map(a=>[a.k,a.label]);
   const cx=170,cy=150,R=104;
   const pt=(i,v)=>{const a=-Math.PI/2+i*(Math.PI*2/axes.length);const r=v/5*R;return[cx+r*Math.cos(a),cy+r*Math.sin(a)];};
   let s=`<svg viewBox="0 0 340 300" role="img" aria-label="Radar des profils aromatiques moyens par pays">`;
@@ -635,7 +730,7 @@ function buildNatRadar(){
 }
 
 function buildIndex(){
-  const pts=allWines().map(w=>({...w,raw:w.pal.alc+w.aro.bf+w.aro.ok-w.pal.acid-w.aro.sv}));
+  const pts=allWines().map(w=>({...w,raw:CFG.indexRaw(w)}));
   const mn=Math.min(...pts.map(p=>p.raw)),mx=Math.max(...pts.map(p=>p.raw));
   const idx=r=>(r-mn)/(mx-mn)*100;
   const W=700,L=64,Rr=652,rows={italy:58,france:96,spain:134,usa:172};
@@ -648,8 +743,8 @@ function buildIndex(){
     const a=sx(idx(sum/C.wines.length));s+=`<line x1="${a}" y1="${y-13}" x2="${a}" y2="${y+13}" stroke="${C.accent}" stroke-width="2.5"/>`;});
   s+=`</svg>`;
   document.getElementById("indexchart").innerHTML=s;
-  document.getElementById("formula").textContent="Indice = Alcool + Fruits noirs + Boisé − Acidité − Cuir/terre, normalisé sur 0–100.  Points = cépages · trait vertical = moyenne nationale.";
-  document.getElementById("ins-index").textContent="Un seul chiffre auditable. La France et l'Italie ancrent l'Ancien Monde, les États-Unis le Nouveau, l'Espagne fait le pont — et l'on repère aussitôt les cépages qui débordent de leur camp.";
+  document.getElementById("formula").textContent=CFG.indexFormula;
+  document.getElementById("ins-index").textContent=CFG.indexInsight;
 }
 
 function buildAnalytics(){buildBoxplots();buildParallel();buildScatter();buildNatRadar();buildIndex();}
@@ -668,8 +763,8 @@ document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 const secObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;navlinks.forEach(a=>a.classList.toggle("active",a.dataset.sec===id));}}),{rootMargin:"-45% 0px -50% 0px"});
 ["nations","glass","spectrum","table","analytics","lexicon"].forEach(id=>{const s=document.getElementById(id);if(s)secObs.observe(s);});
 
-buildNations(); buildCountryTabs(); buildAnalytics();
-selectCountry("italy",false);
+document.querySelectorAll(".modebtn").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+setMode("rouge");
 </script>
 </body>
 </html>
